@@ -64,34 +64,6 @@ float StockItem::stringToFloat(string val){
 double StockItem::stringToDouble(string val){
     return stod(val);
 }
-/*
-int StockItem::stringToInt(string val){
-    int column = val.length();
-    int output = 0;
-    
-    //0 == char(48)
-    //9 == char(57)
-    
-    for (auto i : val){
-        int int_val = int(i)-48;
-        
-        if (int_val <= 9 && int_val >= 0){
-            
-            int powerTen = 1;
-            int pow = column-1;
-            while(pow > 0){
-                powerTen = powerTen * 10;
-                pow--;
-            }
-            
-            output = output + (powerTen * int_val);
-        }
-        column--;
-    }
-    
-    return output;
-}
-*/
 
 string StockItem::floatToString(float val){
     stringstream ss;
@@ -113,64 +85,6 @@ string StockItem::intToString(int val){
     ss << val;
     return ss.str();
 }
-
-/*
-string StockItem::intToString(int val){
-    
-    //quick hack to fix 0 bug
-    if (val == 0) return "0";
-    
-    string output = "";
-    int remainder = val;
-    
-    int column = 1;
-    
-    double powTenReducer = double(val);
-    while (powTenReducer > 9){
-        powTenReducer = powTenReducer/10;
-        column++;
-    }
-    
-    bool done = false;
-    
-    while (!done){
-        int current = remainder;
-        
-        int powerTen = 1;
-        int pow = (column--)-1;
-        while(pow > 0){
-            powerTen = powerTen * 10;
-            pow--;
-        }
-        
-        if (remainder >= powerTen){
-            remainder = remainder % powerTen;
-        
-            current = (current - remainder) / powerTen;
-
-            char currentChar = char(current+48);
-
-            output.append(string(1, currentChar));
-            
-        }else{
-            //this logic needs improving to more elegantly deal with val=0 than the implemented hack
-            if (output != "") output.append(string(1, 48));
-        }
-        
-        if (remainder <= 0){
-            //remainder == 0
-            while (column > 0){
-                output.append(string(1, char(48)));
-                column--;
-            }
-            done = true;
-        }
-        
-    }
-    
-    return output;
-    
-}*/
 
 double StockItem::power(float base, int index){
     double output = 1.0;
@@ -274,17 +188,20 @@ Resistor::Resistor(vector<string> row) : StockItem(row){
     }
 }
 
-int Resistor::getResistance(){
+double Resistor::getResistance(){
     return this->resistance;
 }
+
 string Resistor::toString(){
     string output = StockItem::toString();
     output.append(",\t");
-    output.append(floatToString(this->getResistance()));
+    output.append(doubleToString(this->getResistance()));
+    output.append(",\t");
+    output.append(this->resistance_orig);
     return output;
 }
 
-float Resistor::parseResistance(string val){
+double Resistor::parseResistance(string val){
     
     string prefix = "";
     string suffix = "";
@@ -330,7 +247,7 @@ float Resistor::parseResistance(string val){
     multiplier = power(10.0f, pow);
     
     prefix.append(suffix);
-    return stringToFloat(prefix) * float(multiplier);
+    return stringToDouble(prefix) * multiplier;
 }
 
 Capacitor::Capacitor(vector<string> row) : StockItem(row){
@@ -354,6 +271,8 @@ string Capacitor::toString(){
     string output = StockItem::toString();
     output.append(",\t");
     output.append(doubleToString(this->getCapacitance()));
+    output.append(",\t");
+    output.append(this->capacitance_orig);
     return output;
 }
 

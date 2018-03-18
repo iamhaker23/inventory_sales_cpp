@@ -34,6 +34,14 @@ using std::sort;
             
             void printOut();
             
+            StockItem* getMostStockedItem();
+            
+            int checkTransistorStock(string typeFilter);
+            
+            double getTotalResistance(bool onlyCountStocked);
+            
+            vector<StockItem*> getStockMoreExpensive(int threshold);
+            
     
     };
 

@@ -68,3 +68,73 @@ vector<string> Inventory::splitString(string input, char delimiter){
     
     return output;
 }
+
+StockItem* Inventory::getMostStockedItem(){
+    
+    StockItem* mostStocked = nullptr;
+    
+    for (StockItem* item : items){
+        
+        if (!mostStocked || mostStocked->getStockLevel() < item->getStockLevel()){
+            mostStocked = item;
+        }
+        
+    }
+    
+    return mostStocked;
+    
+}
+
+int Inventory::checkTransistorStock(string typeFilter){
+    
+    int total = 0;
+    
+    for (StockItem* item : items){
+        if (item->getType()=="transistor"){
+            Transistor* transistor = (Transistor*)item;
+            
+            if (transistor->getConfiguration() == typeFilter){
+                total = total + transistor->getStockLevel();
+            }
+        }
+    }
+    
+    return total;
+    
+}
+
+
+double Inventory::getTotalResistance(bool onlyCountStocked){
+    
+    double total = 0.0f;
+    
+    for (StockItem* item : items){
+        if (item->getType()=="resistor"){
+            Resistor* resistor = (Resistor*)item;
+            
+            if (!onlyCountStocked || (onlyCountStocked && resistor->getStockLevel() > 0)){
+                
+                double currTotal = (resistor->getResistance()*(double(resistor->getStockLevel())));
+                                
+                total = total + currTotal;
+            }
+        }
+    }
+    
+    return total;
+    
+}
+
+vector<StockItem*> Inventory::getStockMoreExpensive(int threshold){
+    
+    vector<StockItem*> expensiveItems;
+    
+    for (StockItem* item : items){
+        if (item->getPrice() > threshold){
+            expensiveItems.push_back(item);
+        }
+    }
+    
+    return expensiveItems;
+    
+}

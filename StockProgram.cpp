@@ -18,7 +18,7 @@ static vector<string> readLines(FILE* fptr);
 int main(int argc, char** argv) 
 {
     
-    cout << "1. Loading inventory.txt" << "\n***********************" << endl;
+    cout << "Loading inventory.txt" << "\n***********************" << endl;
     
     //load file
     FILE* fptr = fopen("inventory.txt", "r");
@@ -42,25 +42,30 @@ int main(int argc, char** argv)
     
     //Print a list of the inventory, sorted in order of increasing price.
     
-    cout << "\n2. Printing Inventory Sorted By Price\n" << "\n***********************" << endl;
+    cout << "\nANSWER 0: Printing Inventory Sorted By Price\n" << "\n***********************" << endl;
     inventory->sort(true);
     inventory->printOut();
     
     //What is the component with the largest number of components in stock?
     StockItem* mostStockedItem = inventory->getMostStockedItem();
-    cout << "The item with the highest stock count is " << mostStockedItem->toString() << endl;
+    cout << "\nANSWER 1: The item with the highest stock count is:" << endl;
+    cout <<  mostStockedItem->toString() << endl;
     
     //How many NPN transistors does Chartlins have in stock?
-    //int npnTransistors = inventory->checkTransistorStock("NPN");
-    //cout << "Chartlins has " << npnTransistors << " NPN Transistors in stock." << endl;
+    int npnTransistors = inventory->checkTransistorStock("NPN");
+    cout << "\nANSWER 2: " << npnTransistors << " NPN Transistors in stock." << endl;
     
     //What is the total resistance of all of the resistors in stock?
-    //float resistance = inventory->getTotalResistance(true);
-    //cout << "The total resistance of all (in-stock) resistors is " << resistance << "." << endl;
+    double resistance = inventory->getTotalResistance(true);
+    cout << "\nANSWER 3: The total resistance of all (in-stock) resistors is ";
+    
+    cout.precision(2);
+    
+    cout << fixed << resistance << " ohms" << endl;
     
     //How man stock items have unit prices above 10p?
-    //int totalAboveTenPence = (inventory->getStockMoreExpensive(10))->getSize();
-    //cout << "The inventory contains " << totalAboveTenPence << " items above 10p." << endl;
+    int totalAboveTenPence = (inventory->getStockMoreExpensive(10)).size();
+    cout << "\nANSWER 4: The inventory contains " << totalAboveTenPence << " items above 10p." << endl;
     
     //Note: This would happen implicitly when object goes out of scope, in about 2 lines
     delete inventory;

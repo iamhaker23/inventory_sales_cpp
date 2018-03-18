@@ -27,15 +27,6 @@ using std::stoi;
             bool valid;
             
         protected:
-        
-            //Refactor into static lib
-            static int stringToInt(string val);
-            static float stringToFloat(string val);
-            static double stringToDouble(string val);
-            //Refactor into static lib
-            static string intToString(int val);
-            static string floatToString(float val);
-            static string doubleToString(double val);
             double power(float base, int index);
             
         public:
@@ -49,6 +40,15 @@ using std::stoi;
             string getCode();
             virtual string toString();
             static StockItem* parse(vector<string> row);
+            
+            //Refactor into static lib
+            static int stringToInt(string val);
+            static float stringToFloat(string val);
+            static double stringToDouble(string val);
+            //Refactor into static lib
+            static string intToString(int val);
+            static string floatToString(float val);
+            static string doubleToString(double val);
             
 
     };
@@ -72,16 +72,16 @@ using std::stoi;
     class Resistor : public StockItem{
 
         private:
-            float resistance;
+            double resistance;
             string resistance_orig;
             
         public:
             Resistor(vector<string> row);
             //Resistor(StockItem item);
-            int getResistance();
+            double getResistance();
             //override
             virtual string toString();
-            float parseResistance(string val);
+            double parseResistance(string val);
         
     };
     
