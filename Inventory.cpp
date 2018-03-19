@@ -75,10 +75,11 @@ StockItem* Inventory::getMostStockedItem(){
     
     for (StockItem* item : items){
         
-        if (!mostStocked || mostStocked->getStockLevel() < item->getStockLevel()){
-            mostStocked = item;
+        if (item->isValid()){
+            if (!mostStocked || mostStocked->getStockLevel() < item->getStockLevel()){
+                mostStocked = item;
+            }
         }
-        
     }
     
     return mostStocked;
@@ -90,7 +91,7 @@ int Inventory::checkTransistorStock(string typeFilter){
     int total = 0;
     
     for (StockItem* item : items){
-        if (item->getType()=="transistor"){
+        if (item->isValid() && item->getType()=="transistor"){
             Transistor* transistor = (Transistor*)item;
             
             if (transistor->getConfiguration() == typeFilter){
@@ -109,7 +110,7 @@ double Inventory::getTotalResistance(bool onlyCountStocked){
     double total = 0.0f;
     
     for (StockItem* item : items){
-        if (item->getType()=="resistor"){
+        if (item->isValid() && item->getType()=="resistor"){
             Resistor* resistor = (Resistor*)item;
             
             if (!onlyCountStocked || (onlyCountStocked && resistor->getStockLevel() > 0)){
@@ -130,7 +131,7 @@ vector<StockItem*> Inventory::getStockMoreExpensive(int threshold){
     vector<StockItem*> expensiveItems;
     
     for (StockItem* item : items){
-        if (item->getPrice() > threshold){
+        if (item->isValid() && item->getPrice() > threshold){
             expensiveItems.push_back(item);
         }
     }

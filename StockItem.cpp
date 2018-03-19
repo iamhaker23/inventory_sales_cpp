@@ -146,6 +146,9 @@ int StockItem::getStockLevel(){
 string StockItem::getCode(){
     return this->code;
 }
+bool StockItem::isValid(){
+    return this->valid;
+}
 
             
 Transistor::Transistor(vector<string> row) : StockItem(row){

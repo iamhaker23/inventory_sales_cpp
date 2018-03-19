@@ -38,6 +38,7 @@ using std::stoi;
             int getPrice();
             int getStockLevel();
             string getCode();
+            bool isValid();
             virtual string toString();
             static StockItem* parse(vector<string> row);
             
