@@ -27,23 +27,24 @@ int main(int argc, char** argv)
         EXIT_FAILURE;
     }
     
+    //object will be destroyed when it goes out of scope (end of this function)
     vector<string> fileContents = readLines(fptr);
     
-    
+    //cleanup
     fclose(fptr);
+    delete fptr;
     
+    //verbose, report lines read from file
     cout << "Read " << fileContents.size() << " lines." << endl;
     
     //create inventory from file
     Inventory* inventory = new Inventory(fileContents);
     
-    
     //QUERIES
-    
     //Print a list of the inventory, sorted in order of increasing price.
     
     cout << "\nANSWER 0: Printing Inventory Sorted By Price\n" << "\n***********************" << endl;
-    inventory->sort(true);
+    inventory->sort();
     inventory->printOut();
     
     //What is the component with the largest number of components in stock?
@@ -63,11 +64,11 @@ int main(int argc, char** argv)
     
     cout << fixed << resistance << " ohms" << endl;
     
-    //How man stock items have unit prices above 10p?
+    //How many stock items have unit prices above 10p?
     int totalAboveTenPence = (inventory->getStockMoreExpensive(10)).size();
     cout << "\nANSWER 4: The inventory contains " << totalAboveTenPence << " items above 10p." << endl;
     
-    //Note: This would happen implicitly when object goes out of scope, in about 2 lines
+    //explicitly managing inventory object lifespan
     delete inventory;
     
     return EXIT_SUCCESS;
@@ -93,8 +94,7 @@ vector<string> readLines(FILE* fptr){
                     
                     //add the final character
                     if (peek == EOF) line.append(string(1, c));
-                    
-                    
+                                       
                     output.push_back(line);
                     
                 }

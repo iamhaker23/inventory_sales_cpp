@@ -33,6 +33,9 @@ using std::stoi;
             static bool compare(StockItem* i, StockItem* j);
             StockItem(vector<string> row);
             StockItem();
+            
+            ~StockItem();
+            
             //StockItem(StockItem item);
             string getType();
             int getPrice();

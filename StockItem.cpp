@@ -174,7 +174,6 @@ string Transistor::toString(){
     output.append(this->getConfiguration());
     return output;
 }
-           
 
 Resistor::Resistor(vector<string> row) : StockItem(row){
     try{
@@ -341,3 +340,6 @@ string IC::toString(){
     return output;
 }
 
+StockItem::~StockItem(){
+    
+}

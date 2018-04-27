@@ -12,11 +12,10 @@ Inventory::Inventory(vector<string> csvData){
         
         this->items.push_back(current);
     }
-    
-    
+        
 }
 
-void Inventory::sort(bool ascendingPrice){
+void Inventory::sort(){
     std::sort(items.begin(), items.end(), StockItem::compare);
 }
             
@@ -138,4 +137,9 @@ vector<StockItem*> Inventory::getStockMoreExpensive(int threshold){
     
     return expensiveItems;
     
+}
+
+Inventory::~Inventory(){
+    //call destructor on all contained StockItems
+    items.clear();
 }

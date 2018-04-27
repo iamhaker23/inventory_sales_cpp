@@ -29,8 +29,9 @@ using std::sort;
             static vector<string> splitString(string input, char delimiter);
 
             Inventory(vector<string> csvData);
-
-            void sort(bool ascendingPrice);
+            ~Inventory();
+            
+            void sort();
             
             void printOut();
             
@@ -41,6 +42,8 @@ using std::sort;
             double getTotalResistance(bool onlyCountStocked);
             
             vector<StockItem*> getStockMoreExpensive(int threshold);
+            
+            
             
     
     };
